@@ -1,0 +1,31 @@
+<div class="container mt-4">
+    <h2>Welcome, {{ userData.first_name }} {{ userData.last_name }}</h2>
+    
+    <table class="table">
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Contact No</th>
+          <th>Email</th>
+          <th>Date of Birth</th>
+          <th>Address</th>
+         
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ userData.first_name }}</td>
+          <td>{{ userData.last_name }}</td>
+          <td>{{ userData.contact_no }}</td>
+          <td>{{ userData.email }}</td>
+          <td>{{ userData.dob | date:'yyyy-MM-dd' }}</td>
+          <td>{{ userData.address }}</td>
+         
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <button type="submit" class="btn btn-primary" (click)="logout()">Logout</button>
+
+  

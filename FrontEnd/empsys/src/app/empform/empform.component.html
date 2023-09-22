@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management</title>
+   
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col">
+                <h2 class="text-center">Employee Records</h2>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-success float-right" (click)="addEmployee()">Add Employee</button>
+            </div>
+        </div>
+        <form [formGroup]="myForm">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Contact Number</th>
+                        <th>Email</th>
+                        <th>Date of Birth</th>
+                        <th>Address</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let employee of myForm.get('employeeData')['controls']; let i = index" [formGroup]="employee">
+                        <td>
+                            <input type="text" class="form-control" formControlName="emp_id" [readonly]="false">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" formControlName="first_name">
+                            <div *ngIf="employee.get('first_name').hasError('required') && employee.get('first_name').touched" class="text-danger">
+                                First Name is required
+                            </div>
+                            <div *ngIf="employee.get('first_name').hasError('minlength') && employee.get('first_name').touched" class="text-danger">
+                                First Name Minimum Length is 3
+                            </div>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" formControlName="last_name">
+                            <div *ngIf="employee.get('last_name').hasError('required') && employee.get('last_name').touched" class="text-danger">
+                                Last Name is required
+                            </div>
+                            <div *ngIf="employee.get('last_name').hasError('minlength') && employee.get('last_name').touched" class="text-danger">
+                                Last Name Minimum Length is 5
+                            </div>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" formControlName="contact_no">
+                            <div *ngIf="employee.get('contact_no').hasError('required') && employee.get('contact_no').touched" class="text-danger">
+                                Contact Number is required
+                            </div>
+                            <div *ngIf="employee.get('contact_no').hasError('minlength') && employee.get('contact_no').touched" class="text-danger">
+                                Contact Number Minimum Length is 10
+                            </div>
+                            <div *ngIf="employee.get('contact_no').hasError('pattern') && employee.get('contact_no').touched" class="text-danger">
+                                Invalid Contact Number format
+                            </div>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" formControlName="email">
+                            <div *ngIf="employee.get('email').hasError('required') && employee.get('email').touched" class="text-danger">
+                                Email is required
+                            </div>
+                            <div *ngIf="employee.get('email').hasError('email') && employee.get('email').touched" class="text-danger">
+                                Invalid Email format
+                            </div>
+                        </td>
+                        <td>
+                            <input type="date" class="form-control" formControlName="dob">
+                            <div *ngIf="employee.get('dob').hasError('required') && employee.get('dob').touched" class="text-danger">
+                                Date of Birth is required
+                            </div>
+                            <div *ngIf="employee.get('dob').hasError('minlength') && employee.get('dob').touched" class="text-danger">
+                                Date of Birth Minimum Length is 8
+                            </div>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" formControlName="address">
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary" (click)="editEmployee(i)"[disabled]="!myForm.valid">Edit</button>
+
+                            <button type="button" class="btn btn-primary" (click)="updateEmployee(i)" >Update</button>
+                            <button type="button" class="btn btn-danger" (click)="deleteEmployee(employee.value.emp_id)">Delete</button>
+                        </td>
+                    </tr>
+                    
+                    <tr *ngFor="let item of newlyInsertedEmployees; let i = index">
+                        <td>{{ item.emp_id }}</td>
+                        <td>{{ item.first_name }}</td>
+                        <td>{{ item.last_name }}</td>
+                        <td>{{ item.contact_no }}</td>
+                        <td>{{ item.email }}</td>
+                        <td>{{ item.dob | date:'yyyy-MM-dd' }}</td>
+                        <td>{{ item.address }}</td>
+                        <td>
+                            
+                            <button type="button" class="btn btn-danger" (click)="deleteEmployee(item.emp_id)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+      </div>
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
